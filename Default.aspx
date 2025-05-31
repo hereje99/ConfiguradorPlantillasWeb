@@ -11,7 +11,9 @@
             <h2>Configurador de Plantillas Excel</h2>
 
             <asp:Label ID="lblArchivo" runat="server" Text="Seleccionar archivo: " />
-            <asp:FileUpload ID="fuArchivoExcel" runat="server" />
+            <asp:FileUpload ID="FileUpload1" runat="server" />
+            <asp:Button ID="btnSubirArchivo" runat="server" Text="Cargar archivo" OnClick="btnSubirArchivo_Click" />
+            <br /><br />
             <br /><br />
 
             <asp:Label ID="lblHoja" runat="server" Text="Seleccionar hoja:" />
@@ -19,7 +21,7 @@
             <br /><br />
 
             <asp:Label ID="lblFila" runat="server" Text="Fila de encabezado:" />
-            <asp:TextBox ID="txtFilaEncabezado" runat="server" Width="50px" Text="1" />
+            <asp:TextBox ID="txtFila" runat="server" Width="50px" Text="1" />
             <br /><br />
 
             <asp:Label ID="lblResultado" runat="server" ForeColor="Red" /><br /><br />

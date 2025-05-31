@@ -55,9 +55,18 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:ConfiguradorPlantillasWeb._Default._fuArchivoExcel">
+<member name="F:ConfiguradorPlantillasWeb._Default._FileUpload1">
 <summary>
-fuArchivoExcel control.
+FileUpload1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb._Default._btnSubirArchivo">
+<summary>
+btnSubirArchivo control.
 </summary>
 <remarks>
 Auto-generated field.
@@ -91,9 +100,9 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:ConfiguradorPlantillasWeb._Default._txtFilaEncabezado">
+<member name="F:ConfiguradorPlantillasWeb._Default._txtFila">
 <summary>
-txtFilaEncabezado control.
+txtFila control.
 </summary>
 <remarks>
 Auto-generated field.

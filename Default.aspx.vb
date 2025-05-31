@@ -7,59 +7,77 @@ Public Class _Default
     Inherits Page
 
     Protected Sub btnPrevisualizar_Click(sender As Object, e As EventArgs) Handles btnPrevisualizar.Click
-        gvEncabezados.DataSource = Nothing
-        gvEncabezados.DataBind()
+        lblResultado.Text = ""
+        lblResultado.ForeColor = Drawing.Color.Black
 
-        Dim ruta As String = Server.MapPath("~/App_Data/ExcelTemporal.xlsx")
-
-        If fuArchivoExcel.HasFile Then
-            fuArchivoExcel.SaveAs(ruta)
-            Session("RutaExcel") = ruta
-            ddlHojas.Items.Clear()
-
-            Using workbook = New XLWorkbook(ruta)
-                For Each hoja In workbook.Worksheets
-                    ddlHojas.Items.Add(hoja.Name)
-                Next
-            End Using
-
-            If ddlHojas.Items.Count > 0 Then
-                ddlHojas.SelectedIndex = 0
+        Try
+            ' Guardar el archivo si aún no está en memoria
+            If ViewState("RutaExcel") Is Nothing Then
+                If FileUpload1.HasFile Then
+                    Dim rutaGuardada As String = ExcelHelper.GuardarArchivoTemporal(FileUpload1)
+                    ViewState("RutaExcel") = rutaGuardada
+                Else
+                    lblResultado.Text = "Error: primero debe subir un archivo."
+                    lblResultado.ForeColor = Drawing.Color.Red
+                    Return
+                End If
             End If
 
-            lblResultado.Text = "Hojas detectadas. Vuelve a presionar Previsualizar."
-            Exit Sub
-        End If
+            ' Obtener ruta ya guardada
+            Dim ruta As String = ViewState("RutaExcel").ToString()
+            Dim hojaSeleccionada As String = ddlHojas.SelectedValue
+            Dim filaEncabezado As Integer = Convert.ToInt32(txtFila.Text)
 
-        If Session("RutaExcel") Is Nothing Then
-            lblResultado.Text = "Primero debes cargar un archivo."
-            Exit Sub
-        End If
+            ' Leer encabezados desde Excel (sin trim)
+            Dim encabezados As List(Of EncabezadoJson) = ValidarPlantilla.ObtenerEncabezadosDesdeExcel(ruta, hojaSeleccionada, filaEncabezado)
 
-        ruta = Session("RutaExcel").ToString()
-        Dim hojaSeleccionada As String = ddlHojas.SelectedValue
-        Dim filaEncabezado As Integer
+            ' Buscar coincidencia exacta con alguna plantilla existente
+            Dim resultadoCoincidencia As CoincidenciaResultado = ValidarPlantilla.BuscarPlantillaCoincidente(encabezados)
 
-        If Not Integer.TryParse(txtFilaEncabezado.Text.Trim(), filaEncabezado) Then
-            lblResultado.Text = "Fila de encabezado inválida."
-            Exit Sub
-        End If
+            If resultadoCoincidencia IsNot Nothing AndAlso resultadoCoincidencia.PlantillaID > 0 Then
+                lblResultado.Text = $"<br/>Coincide con plantilla ID: {resultadoCoincidencia.PlantillaID}"
+                lblResultado.ForeColor = Drawing.Color.Red
+            Else
+                lblResultado.Text = "<br/>No coincide con ninguna plantilla."
+                lblResultado.ForeColor = Drawing.Color.Black
+            End If
 
-        ' Paso 1: Leer encabezados desde Excel
-        Dim encabezados As List(Of EncabezadoJson) = ValidarPlantilla.ObtenerEncabezadosDesdeExcel(ruta, hojaSeleccionada, filaEncabezado)
-
-        ' Paso 2: Verificar si hay coincidencia con la base de datos
-        Dim plantillaCoincidente = ValidarPlantilla.BuscarPlantillaCoincidente(encabezados)
-
-        If plantillaCoincidente IsNot Nothing Then
-            lblResultado.Text = $"Coincide con plantilla existente (ID: {plantillaCoincidente.PlantillaID})"
-        Else
-            lblResultado.Text = "No coincide con ninguna plantilla existente."
-        End If
-
-        gvEncabezados.DataSource = encabezados
-        gvEncabezados.DataBind()
+        Catch ex As Exception
+            lblResultado.Text = "Error al procesar el archivo: " & ex.Message
+            lblResultado.ForeColor = Drawing.Color.Red
+        End Try
     End Sub
+
+    Protected Sub btnSubirArchivo_Click(sender As Object, e As EventArgs) Handles btnSubirArchivo.Click
+        lblResultado.Text = ""
+        lblResultado.ForeColor = Drawing.Color.Black
+
+        Try
+            If FileUpload1.HasFile Then
+                ' Guardar archivo y ruta en ViewState
+                Dim ruta As String = ExcelHelper.GuardarArchivoTemporal(FileUpload1)
+                ViewState("RutaExcel") = ruta
+
+                ' Cargar nombres de hojas
+                Using workbook = New ClosedXML.Excel.XLWorkbook(ruta)
+                    ddlHojas.Items.Clear()
+                    For Each hoja In workbook.Worksheets
+                        ddlHojas.Items.Add(New ListItem(hoja.Name))
+                    Next
+                End Using
+
+                lblResultado.Text = "Archivo cargado correctamente. Ahora seleccione hoja y previsualice."
+            Else
+                lblResultado.Text = "Debe seleccionar un archivo."
+                lblResultado.ForeColor = Drawing.Color.Red
+            End If
+        Catch ex As Exception
+            lblResultado.Text = "Error al cargar el archivo: " & ex.Message
+            lblResultado.ForeColor = Drawing.Color.Red
+        End Try
+    End Sub
+
+
 
 
 

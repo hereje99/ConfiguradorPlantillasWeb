@@ -32,13 +32,22 @@ Partial Public Class _Default
     Protected WithEvents lblArchivo As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''fuArchivoExcel control.
+    '''FileUpload1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents fuArchivoExcel As Global.System.Web.UI.WebControls.FileUpload
+    Protected WithEvents FileUpload1 As Global.System.Web.UI.WebControls.FileUpload
+
+    '''<summary>
+    '''btnSubirArchivo control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnSubirArchivo As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
     '''lblHoja control.
@@ -68,13 +77,13 @@ Partial Public Class _Default
     Protected WithEvents lblFila As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtFilaEncabezado control.
+    '''txtFila control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtFilaEncabezado As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents txtFila As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''lblResultado control.
