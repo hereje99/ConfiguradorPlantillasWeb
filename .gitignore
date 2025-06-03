@@ -22,3 +22,7 @@ obj/
 
 # Otros
 _ReSharper*/
+
+# Archivos con cadenas de conexión reales
+Web.config
+*.config

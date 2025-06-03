@@ -37,7 +37,7 @@ ConfiguradorPlantillasWeb
  Returns the Asp log object.
  </summary>
 </member>
-<member name="F:ConfiguradorPlantillasWeb._Default._form1">
+<member name="F:ConfiguradorPlantillasWeb.DetallePlantilla._form1">
 <summary>
 form1 control.
 </summary>
@@ -46,7 +46,103 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:ConfiguradorPlantillasWeb._Default._lblArchivo">
+<member name="F:ConfiguradorPlantillasWeb.DetallePlantilla._lblResumen">
+<summary>
+lblResumen control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.DetallePlantilla._gvColumnas">
+<summary>
+gvColumnas control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.DetallePlantilla._lblSeleccion">
+<summary>
+lblSeleccion control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.DetallePlantilla._lblConcepto">
+<summary>
+lblConcepto control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.DetallePlantilla._ddlConceptosMaestros">
+<summary>
+ddlConceptosMaestros control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.DetallePlantilla._btnAsignar">
+<summary>
+btnAsignar control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.DetallePlantilla._btnQuitar">
+<summary>
+btnQuitar control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.DetallePlantilla._lblMensaje">
+<summary>
+lblMensaje control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.DetallePlantilla._lnkRegresar">
+<summary>
+lnkRegresar control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="M:ConfiguradorPlantillasWeb.ConfiguradorPlantillasExcel.Utils.EncabezadoHelper.GenerarNombresVisuales(System.Collections.Generic.List{System.String})">
+ <summary>
+ Genera una lista de nombres únicos para mostrar en un DataGridView, a partir de los nombres reales del Excel.
+ Si un nombre se repite, se le añade un sufijo incremental (_2, _3, etc.).
+ </summary>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._lblArchivo">
 <summary>
 lblArchivo control.
 </summary>
@@ -55,25 +151,52 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:ConfiguradorPlantillasWeb._Default._FileUpload1">
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._fuArchivo">
 <summary>
-FileUpload1 control.
+fuArchivo control.
 </summary>
 <remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:ConfiguradorPlantillasWeb._Default._btnSubirArchivo">
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._btnSeleccionarArchivo">
 <summary>
-btnSubirArchivo control.
+btnSeleccionarArchivo control.
 </summary>
 <remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:ConfiguradorPlantillasWeb._Default._lblHoja">
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._lblArchivoSeleccionado">
+<summary>
+lblArchivoSeleccionado control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._lblNombre">
+<summary>
+lblNombre control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._txtNombrePlantilla">
+<summary>
+txtNombrePlantilla control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._lblHoja">
 <summary>
 lblHoja control.
 </summary>
@@ -82,7 +205,7 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:ConfiguradorPlantillasWeb._Default._ddlHojas">
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._ddlHojas">
 <summary>
 ddlHojas control.
 </summary>
@@ -91,7 +214,7 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:ConfiguradorPlantillasWeb._Default._lblFila">
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._lblFila">
 <summary>
 lblFila control.
 </summary>
@@ -100,25 +223,16 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:ConfiguradorPlantillasWeb._Default._txtFila">
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._txtFilaEncabezado">
 <summary>
-txtFila control.
+txtFilaEncabezado control.
 </summary>
 <remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:ConfiguradorPlantillasWeb._Default._lblResultado">
-<summary>
-lblResultado control.
-</summary>
-<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member>
-<member name="F:ConfiguradorPlantillasWeb._Default._btnPrevisualizar">
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._btnPrevisualizar">
 <summary>
 btnPrevisualizar control.
 </summary>
@@ -127,9 +241,72 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:ConfiguradorPlantillasWeb._Default._gvEncabezados">
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._btnGuardarPlantilla">
 <summary>
-gvEncabezados control.
+btnGuardarPlantilla control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._btnVerPlantillas">
+<summary>
+btnVerPlantillas control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._lblMensaje">
+<summary>
+lblMensaje control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.ConfiguradorPlantillas._gvDatos">
+<summary>
+gvDatos control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.ListadoPlantillas._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.ListadoPlantillas._gvPlantillas">
+<summary>
+gvPlantillas control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.ListadoPlantillas._lblMensaje">
+<summary>
+lblMensaje control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:ConfiguradorPlantillasWeb.ListadoPlantillas._lnkRegresar">
+<summary>
+lnkRegresar control.
 </summary>
 <remarks>
 Auto-generated field.

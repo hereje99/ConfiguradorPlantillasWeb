@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class _Default
+Partial Public Class DetallePlantilla
 
     '''<summary>
     '''form1 control.
@@ -23,101 +23,83 @@ Partial Public Class _Default
     Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
 
     '''<summary>
-    '''lblArchivo control.
+    '''lblResumen control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblArchivo As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblResumen As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''FileUpload1 control.
+    '''gvColumnas control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents FileUpload1 As Global.System.Web.UI.WebControls.FileUpload
+    Protected WithEvents gvColumnas As Global.System.Web.UI.WebControls.GridView
 
     '''<summary>
-    '''btnSubirArchivo control.
+    '''lblSeleccion control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnSubirArchivo As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents lblSeleccion As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''lblHoja control.
+    '''lblConcepto control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblHoja As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblConcepto As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''ddlHojas control.
+    '''ddlConceptosMaestros control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ddlHojas As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents ddlConceptosMaestros As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''lblFila control.
+    '''btnAsignar control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblFila As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents btnAsignar As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''txtFila control.
+    '''btnQuitar control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtFila As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents btnQuitar As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''lblResultado control.
+    '''lblMensaje control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents lblResultado As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblMensaje As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
-    '''txtLogComparacion control.
+    '''lnkRegresar control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents txtLogComparacion As Global.System.Web.UI.WebControls.TextBox
-
-    '''<summary>
-    '''btnPrevisualizar control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnPrevisualizar As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''gvEncabezados control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents gvEncabezados As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents lnkRegresar As Global.System.Web.UI.WebControls.HyperLink
 End Class

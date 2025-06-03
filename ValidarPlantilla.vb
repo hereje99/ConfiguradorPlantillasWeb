@@ -1,117 +1,110 @@
 ﻿Imports System.Data.SqlClient
-Imports ClosedXML.Excel
-Imports DocumentFormat.OpenXml.Drawing.Wordprocessing
+Imports System.Configuration
+Imports System.IO
+Imports ConfiguradorPlantillasWeb.ConfiguradorPlantillasExcel.Utils
+Imports ConfiguradorPlantillasWeb.Models
 
-Public Class ValidarPlantilla
+Namespace ConfiguradorPlantillasExcel
+    Public Class ValidarPlantilla
 
-    Public Shared Function ObtenerEncabezadosDesdeExcel(rutaArchivo As String, nombreHoja As String, filaEncabezado As Integer) As List(Of EncabezadoJson)
-        Dim encabezados As New List(Of EncabezadoJson)()
-        Dim nombresExistentes As New HashSet(Of String)()
-        Dim contadorSinNombre As Integer = 1
+        Public Shared Function BuscarPlantillaCoincidente(hoja As String, hojaPosicion As Integer,
+                                                  filaInicioDatos As Integer, encabezados As List(Of EncabezadoJson)) As PlantillaCoincidencia
+            Try
+                File.AppendAllText("log_debug.txt", $"→ Filtro: Hoja='{hoja}', Pos={hojaPosicion}, Fila={filaInicioDatos}{Environment.NewLine}")
 
-        Using workbook As New XLWorkbook(rutaArchivo)
-            Dim hoja = workbook.Worksheet(nombreHoja)
-            Dim fila = hoja.Row(filaEncabezado)
-            Dim ultimaColumna As Integer = hoja.RangeUsed().RangeAddress.LastAddress.ColumnNumber
+                Dim posiblesCoincidencias = ObtenerPosiblesCoincidencias(hoja, hojaPosicion, filaInicioDatos)
 
-            For i As Integer = 1 To ultimaColumna
-                Dim celda = fila.Cell(i)
-                Dim nombreOriginal As String = celda.GetString()
-                Dim nombreFinal As String = nombreOriginal
+                ' Filtrar por cantidad de columnas coincidente
+                Dim candidatos = posiblesCoincidencias.
+                         Where(Function(p) p.Columnas IsNot Nothing AndAlso p.Columnas.Count = encabezados.Count).
+                         ToList()
 
-                If String.IsNullOrWhiteSpace(nombreOriginal) Then
-                    nombreFinal = "SIN_NOMBRE_" & contadorSinNombre
-                    contadorSinNombre += 1
+                Dim logComparacion As New System.Text.StringBuilder()
+                Dim seEncontroCoincidencia As Boolean = False
+
+                For Each plantilla In candidatos
+                    Dim logEstructura As String = Nothing
+                    If CoincideEstructura(plantilla.Columnas, encabezados, logEstructura) Then
+                        Console.WriteLine(logEstructura)
+                        File.WriteAllText("log_comparacion.txt", logEstructura)
+                        seEncontroCoincidencia = True
+                        Return plantilla
+                    Else
+                        logComparacion.AppendLine($"→ Comparación con Plantilla_ID: {plantilla.Plantilla_ID}")
+                        logComparacion.AppendLine(logEstructura)
+                        logComparacion.AppendLine(New String("-"c, 60))
+                    End If
+                Next
+
+                ' Guardar log de comparaciones si no hubo coincidencias exactas
+                If Not seEncontroCoincidencia Then
+                    File.WriteAllText("log_comparacion.txt", logComparacion.ToString())
+
+                    ' También registrar en histórico
+                    Dim logHistorico As String =
+                $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] Validación sin coincidencia exacta:{Environment.NewLine}" &
+                $"Hoja: {hoja}, HojaPosición: {hojaPosicion}, RenglónInicioDatos: {filaInicioDatos}{Environment.NewLine}" &
+                $"Total columnas en archivo: {encabezados.Count}{Environment.NewLine}" &
+                $"Comparaciones realizadas: {candidatos.Count}{Environment.NewLine}" &
+                $"Resultado: NO SE ENCONTRÓ PLANTILLA COMPATIBLE{Environment.NewLine}{Environment.NewLine}"
+
+                    File.AppendAllText("log_historico.txt", logHistorico)
                 End If
 
-                While nombresExistentes.Contains(nombreFinal)
-                    nombreFinal &= "_2"
-                End While
+                Return Nothing
+            Catch ex As Exception
+                Console.WriteLine("Error en BuscarPlantillaCoincidente: " & ex.Message)
+                Return Nothing
+            End Try
+        End Function
 
-                nombresExistentes.Add(nombreFinal)
+        Public Shared Function CoincideEstructura(listaA As List(Of EncabezadoJson),
+                                          listaB As List(Of EncabezadoJson),
+                                          ByRef logDetalle As String) As Boolean
+            Dim log As New System.Text.StringBuilder()
+            log.AppendLine("----- Comparación de estructuras (por nombre, ignorando vacíos) -----")
 
-                encabezados.Add(New EncabezadoJson With {
-                    .NombreFinal = "·" & nombreFinal & "·",
-                    .NombreOriginal = "·" & nombreOriginal & "·",
-                    .Posicion = i
-                })
-            Next
-        End Using
+            Dim listaAOrdenada = listaA.OrderBy(Function(x) x.Posicion).ToList()
+            Dim listaBOrdenada = listaB.OrderBy(Function(x) x.Posicion).ToList()
 
-        Return encabezados
-    End Function
+            log.AppendLine($"Total A: {listaAOrdenada.Count}, Total B: {listaBOrdenada.Count}")
+            log.AppendLine()
 
+            Dim iguales As Boolean = (listaAOrdenada.Count = listaBOrdenada.Count)
 
-    Public Shared Function CoincideEstructura(encabezadosArchivo As List(Of EncabezadoJson), encabezadosBD As List(Of EncabezadoJson)) As Boolean
-        If encabezadosArchivo.Count <> encabezadosBD.Count Then
-            Return False
-        End If
+            For i As Integer = 0 To Math.Max(listaAOrdenada.Count, listaBOrdenada.Count) - 1
+                Dim nombreA As String = If(i < listaAOrdenada.Count, listaAOrdenada(i).Nombre, "(vacío)")
+                Dim nombreB As String = If(i < listaBOrdenada.Count, listaBOrdenada(i).Nombre, "(vacío)")
+                Dim posA As Integer = If(i < listaAOrdenada.Count, listaAOrdenada(i).Posicion, i + 1)
+                Dim posB As Integer = If(i < listaBOrdenada.Count, listaBOrdenada(i).Posicion, i + 1)
 
-        For i = 0 To encabezadosArchivo.Count - 1
-            If encabezadosArchivo(i).NombreFinal <> encabezadosBD(i).NombreFinal Then
-                Return False
-            End If
-        Next
+                Dim coincide As Boolean = (nombreA = nombreB)
 
-        Return True
-    End Function
-
-
-    Public Shared Function BuscarPlantillaCoincidente(encabezadosArchivo As List(Of EncabezadoJson)) As CoincidenciaResultado
-        Dim resultado As New CoincidenciaResultado With {
-        .Coincide = False
-    }
-
-        Dim connStr = ConfigurationManager.ConnectionStrings("BD_SAETA_DEV").ConnectionString
-
-        Using conn As New SqlConnection(connStr)
-            conn.Open()
-
-            ' Obtener todas las plantillas disponibles
-            Dim cmdPlantillas As New SqlCommand("SELECT DISTINCT Plantilla_ID FROM MLQ_Columna WHERE Activo = 1 ORDER BY Plantilla_ID", conn)
-            Dim readerPlantillas = cmdPlantillas.ExecuteReader()
-
-            Dim plantillas As New List(Of Integer)
-            While readerPlantillas.Read()
-                plantillas.Add(Convert.ToInt32(readerPlantillas("Plantilla_ID")))
-            End While
-            readerPlantillas.Close()
-
-            ' Comparar cada plantilla contra la estructura cargada
-            For Each plantillaID In plantillas
-                Dim cmdCols As New SqlCommand("SELECT Nombre, Posicion FROM MLQ_Columna WHERE Plantilla_ID = @PlantillaID AND Activo = 1 ORDER BY Posicion", conn)
-                cmdCols.Parameters.AddWithValue("@PlantillaID", plantillaID)
-
-                Dim readerCols = cmdCols.ExecuteReader()
-                Dim encabezadosBD As New List(Of EncabezadoJson)
-
-                While readerCols.Read()
-                    encabezadosBD.Add(New EncabezadoJson With {
-                    .NombreFinal = readerCols("Nombre").ToString(),
-                    .NombreOriginal = readerCols("Nombre").ToString(),
-                    .Posicion = Convert.ToInt32(readerCols("Posicion"))
-                })
-                End While
-                readerCols.Close()
-
-                ' Verificar coincidencia exacta
-                If CoincideEstructura(encabezadosArchivo, encabezadosBD) Then
-                    resultado.Coincide = True
-                    resultado.PlantillaID = plantillaID
-
-                    ' Obtener nombre de plantilla
-                    Dim cmdNombre As New SqlCommand("SELECT Nombre FROM MLQ_Plantilla WHERE Plantilla_ID = @PlantillaID", conn)
-                    cmdNombre.Parameters.AddWithValue("@PlantillaID", plantillaID)
-                    Dim nombre = cmdNombre.ExecuteScalar()
-                    resultado.NombrePlantilla = If(nombre IsNot Nothing, nombre.ToString(), "Desconocido")
-                    Exit For
+                If Not coincide Then
+                    iguales = False
                 End If
+
+                Dim marcador As String = If(coincide, "✓", "✗")
+
+                log.AppendLine($"{marcador}  Col: {posA,-2} – '{nombreA,-20}' | Col: {posB,-2} – '{nombreB}'")
             Next
-        End Using
 
-        Return resultado
-    End Function
+            log.AppendLine()
+            log.AppendLine($"¿Coinciden exactamente?: {(If(iguales, "SÍ", "NO"))}")
+            logDetalle = log.ToString()
+
+            System.Diagnostics.Debug.WriteLine(logDetalle)
+            Return iguales
+        End Function
+
+        Private Shared Function ObtenerTodasLasPlantillas(hojaNombre As String, hojaPosicion As Integer, renglonInicialDatos As Integer) As List(Of PlantillaCoincidencia)
+            Return PlantillaDAO.ObtenerPlantillasCoincidentes(hojaNombre, hojaPosicion, renglonInicialDatos)
+        End Function
 
 
+        Private Shared Function ObtenerPosiblesCoincidencias(hoja As String, hojaPosicion As Integer, filaInicioDatos As Integer) As List(Of PlantillaCoincidencia)
+            Return ObtenerTodasLasPlantillas(hoja, hojaPosicion, filaInicioDatos)
+        End Function
 
-End Class
+    End Class
+End Namespace

@@ -70,6 +70,7 @@
     <Reference Include="System.IO.Packaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -144,7 +145,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
-    <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -162,9 +162,11 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="Default.aspx" />
+    <Content Include="DetallePlantilla.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="ConfiguradorPlantillas.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="ListadoPlantillas.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -233,28 +235,41 @@
       <DependentUpon>About.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="CoincidenciaResultado.vb" />
-    <Compile Include="Contact.aspx.designer.vb">
-      <DependentUpon>Contact.aspx</DependentUpon>
+    <Compile Include="ComparadorEstructuraHelper.vb" />
+    <Compile Include="DAO\ColumnaDAO.vb" />
+    <Compile Include="DAO\ComparadorEstructuraDAO.vb" />
+    <Compile Include="DAO\ConceptoDAO.vb" />
+    <Compile Include="DAO\PlantillaDAO.vb" />
+    <Compile Include="DetallePlantilla.aspx.designer.vb">
+      <DependentUpon>DetallePlantilla.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Contact.aspx.vb">
-      <DependentUpon>Contact.aspx</DependentUpon>
+    <Compile Include="DetallePlantilla.aspx.vb">
+      <DependentUpon>DetallePlantilla.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="Default.aspx.vb">
+    <Compile Include="Models\EncabezadoJson.vb" />
+    <Compile Include="ConfiguradorPlantillas.aspx.designer.vb">
+      <DependentUpon>ConfiguradorPlantillas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ConfiguradorPlantillas.aspx.vb">
+      <DependentUpon>ConfiguradorPlantillas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Default.aspx.designer.vb">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="EncabezadoHelper.vb" />
-    <Compile Include="EncabezadoJson.vb" />
-    <Compile Include="ExcelHelper.vb" />
-    <Compile Include="ExcelReader.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="ListadoPlantillas.aspx.designer.vb">
+      <DependentUpon>ListadoPlantillas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListadoPlantillas.aspx.vb">
+      <DependentUpon>ListadoPlantillas.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Models\Columna.vb" />
+    <Compile Include="Models\Concepto.vb" />
+    <Compile Include="Models\ConceptoMaestro.vb" />
+    <Compile Include="Models\Plantilla.vb" />
+    <Compile Include="Models\PlantillaCoincidencia.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -281,6 +296,9 @@
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Utils\ConexionHelper.vb" />
+    <Compile Include="Utils\EncabezadoHelper.vb" />
+    <Compile Include="Utils\Logger.vb" />
     <Compile Include="ValidarPlantilla.vb" />
     <Compile Include="ViewSwitcher.ascx.vb">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
@@ -330,6 +348,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Temp\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

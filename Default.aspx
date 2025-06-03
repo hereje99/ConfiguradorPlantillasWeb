@@ -25,6 +25,7 @@
             <br /><br />
 
             <asp:Label ID="lblResultado" runat="server" ForeColor="Red" /><br /><br />
+            <asp:TextBox ID="txtLogComparacion" runat="server" TextMode="MultiLine" Rows="15" Columns="80" ReadOnly="true" Style="margin-top:10px;" />
             <asp:Button ID="btnPrevisualizar" runat="server" Text="Previsualizar" OnClick="btnPrevisualizar_Click" />
             <br /><br />
 
